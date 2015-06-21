@@ -38,8 +38,11 @@ public class Main {
 		ArrayList<ArrayList<Long>> dynasties = new ArrayList<ArrayList<Long>>();
 		ArrayList<ArrayList<String>> names = new ArrayList<ArrayList<String>>();
 
-		// Initialize
+		// Randomizer Main Execution
+		// Creation of Mod file
+		Log.openLog();
 		MiscUtility.initModFile(file_mod);
+		
 		MiscUtility.blankFiles(src_diplomacy, dst_mod);
 		// MiscUtility.blankFiles(src_wars, dst_mod);
 		TitleUtility.blankTitles(src_titles, dst_mod);
@@ -75,6 +78,6 @@ public class Main {
 						StandardCopyOption.REPLACE_EXISTING);
 			}
 		}
-		System.out.println("Fatto!");
+		Log.closeLog();
 	}
 }
