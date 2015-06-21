@@ -11,9 +11,6 @@ import utility.*;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		
-		// Execution Variables
-		boolean lessRandomMode = true;
 
 		// TODO - Put in a configuration file
 		File src_folder = new File("C:\\Program Files (x86)\\Crusader Kings II - Collection");
@@ -34,7 +31,9 @@ public class Main {
 		File dst_republics = new File(dst_mod.getAbsolutePath() + "\\common\\landed_titles\\republic_duchies.txt");
 		File dst_flags = new File(dst_mod.getAbsolutePath() + "\\gfx\\flags");
 		File dst_republic_names = new File(dst_mod.getAbsolutePath() + "\\localisation\\republic_names.csv");
-
+		
+		// Execution Variables
+		boolean lessRandomMode = true;
 		Random random = new Random();
 		ArrayList<ArrayList<Long>> dynasties = new ArrayList<ArrayList<Long>>();
 		ArrayList<ArrayList<String>> names = new ArrayList<ArrayList<String>>();
@@ -51,7 +50,7 @@ public class Main {
 		// Main Loop
 		for (int k = 0; k < src_provinces.listFiles().length; k++) {
 			File file_province = src_provinces.listFiles()[k];
-			Log.log("Start on: " + file_province.getName());
+			Log.write("Start on: " + file_province.getName());
 			Statistics.countProvince();
 			Holding holding = MiscUtility.randomizeHolding(random.nextInt(100));
 			Culture culture = Culture.values()[random.nextInt(92)];
