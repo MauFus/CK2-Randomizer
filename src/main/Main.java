@@ -11,6 +11,9 @@ import utility.*;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
+		
+		// Execution Variables
+		boolean lessRandomMode = true;
 
 		// Parameters
 		File src_folder = new File("C:\\Program Files (x86)\\Crusader Kings II - Collection");
@@ -52,7 +55,7 @@ public class Main {
 			Statistics.countProvince();
 			Holding holding = MiscUtility.randomizeHolding(random.nextInt(100));
 			Culture culture = Culture.values()[random.nextInt(92)];
-			String provinceResult = ProvinceUtility.randomizeProvince(file_province, dst_mod, holding, culture, random);
+			String provinceResult = ProvinceUtility.randomizeProvince(lessRandomMode, file_province, dst_mod, holding, culture, random);
 			Long dinastia = CharacterUtility.selectDynasty(dynasties, culture);
 			// for (int h = 0; h < 50; h++)
 			CharacterUtility.randomizeCharacter(k, new File(dst_mod + "\\history\\characters\\custom.txt"), culture,

@@ -3,6 +3,7 @@ package utility;
 import java.io.*;
 import java.util.Random;
 
+import main.Main;
 import types.*;
 
 public class ProvinceUtility {
@@ -83,7 +84,7 @@ public class ProvinceUtility {
 		}
 	}
 
-	public static String randomizeProvince(File src, File dst, Holding holding, Culture culture, Random random)
+	public static String randomizeProvince(boolean lessRandomMode, File src, File dst, Holding holding, Culture culture, Random random)
 			throws IOException {
 		String title = "";
 		String religion = "";
@@ -129,20 +130,22 @@ public class ProvinceUtility {
 							// Define main holding
 							if (!flag_holding) {
 								
+								
 								// LessRandomMode
-								holding = Holding.valueOf(line.split("=")[1].split("#")[0].trim());
-								int rand_holding;
-								if ((rand_holding = random.nextInt(100)) > 55){
-									if (rand_holding < 67)
-										holding = Holding.castle;
-									else if (rand_holding < 78)
-										holding = Holding.temple;
-									else if (rand_holding < 89)
-										holding = Holding.city;
-									else
-										holding = Holding.tribal;
+								if (lessRandomMode) {
+									holding = Holding.valueOf(line.split("=")[1].split("#")[0].trim());
+									int rand_holding;
+									if ((rand_holding = random.nextInt(100)) > 55){
+										if (rand_holding < 67)
+											holding = Holding.castle;
+										else if (rand_holding < 78)
+											holding = Holding.temple;
+										else if (rand_holding < 89)
+											holding = Holding.city;
+										else
+											holding = Holding.tribal;
+									}
 								}
-								//
 								
 								if (ProvinceUtility.isHolySite(line.split("=")[0].trim()))
 									holding = Holding.temple;
