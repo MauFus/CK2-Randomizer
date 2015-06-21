@@ -15,25 +15,25 @@ public class Main {
 		// Execution Variables
 		boolean lessRandomMode = true;
 
-		// Parameters
+		// TODO - Put in a configuration file
 		File src_folder = new File("C:\\Program Files (x86)\\Crusader Kings II - Collection");
+		File dst_folder = new File("C:\\Users\\Mauro\\Documents\\Paradox Interactive\\Crusader Kings II\\mod");
+
+		// Parameters
 		File src_provinces = new File(src_folder.getAbsolutePath() + "\\history\\provinces");
 		File src_diplomacy = new File(src_folder.getAbsolutePath() + "\\history\\diplomacy");
-		// File src_wars = new File(src_folder.getAbsolutePath() +
-		// "\\history\\wars");
+		File src_wars = new File(src_folder.getAbsolutePath() + "\\history\\wars");
 		File src_titles = new File(src_folder.getAbsolutePath() + "\\history\\titles");
 		File src_dynasties = new File(src_folder.getAbsolutePath() + "\\common\\dynasties\\00_dynasties.txt");
 		File src_names = new File(src_folder.getAbsolutePath() + "\\common\\cultures\\00_cultures.txt");
 		File src_landed = new File(src_folder.getAbsolutePath() + "\\common\\landed_titles\\landed_titles.txt");
 		File src_flags = new File(src_folder.getAbsolutePath() + "\\gfx\\flags");
 
-		File dst_mod = new File(
-				"C:\\Users\\Mauro\\Documents\\Paradox Interactive\\Crusader Kings II\\mod\\CK2-Randomizer");
-		File file_mod = new File(
-				"C:\\Users\\Mauro\\Documents\\Paradox Interactive\\Crusader Kings II\\mod\\CK2-Randomizer.mod");
+		File dst_mod = new File(dst_folder.getAbsolutePath() + "\\CK2-Randomizer");
+		File file_mod = new File(dst_folder.getAbsolutePath() + "\\CK2-Randomizer.mod");
 		File dst_republics = new File(dst_mod.getAbsolutePath() + "\\common\\landed_titles\\republic_duchies.txt");
 		File dst_flags = new File(dst_mod.getAbsolutePath() + "\\gfx\\flags");
-		File dst_localisation = new File(dst_mod.getAbsolutePath() + "\\localisation\\republic_names.csv");
+		File dst_republic_names = new File(dst_mod.getAbsolutePath() + "\\localisation\\republic_names.csv");
 
 		Random random = new Random();
 		ArrayList<ArrayList<Long>> dynasties = new ArrayList<ArrayList<Long>>();
@@ -69,7 +69,7 @@ public class Main {
 				TitleUtility.assignTitle("d_" + titleName + "_rep.txt", new File(dst_mod + "\\history\\titles"),
 						3000000 + k);
 
-				TitleUtility.assignDuchyToRepublic(src_landed, dst_republics, titleName, dst_localisation);
+				TitleUtility.assignDuchyToRepublic(src_landed, dst_republics, titleName, dst_republic_names);
 				// Copia la Flag
 				File flag = new File(dst_flags + "\\d_" + titleName + "_rep.tga");
 				Files.copy(Paths.get(src_flags + "\\c_" + titleName + ".tga"), Paths.get(flag.getAbsolutePath()),

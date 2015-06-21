@@ -3,7 +3,6 @@ package utility;
 import java.io.*;
 import java.util.Random;
 
-import main.Main;
 import types.*;
 
 public class ProvinceUtility {
