@@ -34,23 +34,35 @@ public class MiscUtility {
 		}
 	}
 
-	public static void initModFile(File fl_mod) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(fl_mod));
-		writer.append("name = \"CK2-Randomizer\"\n");
-		writer.append("path = \"mod\\CK2-Randomizer\"\n");
-		writer.append("user_dir = \"CK2-Randomizer\"\n");
-		writer.append("replace_path = \"common\"\n");
-		writer.append("replace_path = \"common\\landed_titles\"\n");
-		writer.append("replace_path = \"events\"\n");
-		writer.append("replace_path = \"history\\characters\"\n");
-		writer.append("replace_path = \"history\\diplomacy\"\n");
-		writer.append("replace_path = \"history\\provinces\"\n");
-		writer.append("replace_path = \"history\\technology\"\n");
-		writer.append("replace_path = \"history\\titles\"\n");
-		writer.append("replace_path = \"history\\wars\"\n");
-		writer.append("replace_path = \"gfx\\flags\"\n");
-		writer.append("replace_path = \"localization\"\n");
-		writer.close();
+	/**
+	 * Create the CK2 Mod file
+	 * @param fl_mod - File destination
+	 */
+	public static void initModFile(File fl_mod) {
+		Log.info("Creating CK2-Randomizer Mod file...");
+		BufferedWriter writer;
+		try {
+			writer = new BufferedWriter(new FileWriter(fl_mod));
+			writer.append("name = \"CK2-Randomizer\"\n");
+			writer.append("path = \"mod\\CK2-Randomizer\"\n");
+			writer.append("user_dir = \"CK2-Randomizer\"\n");
+			writer.append("replace_path = \"common\"\n");
+			writer.append("replace_path = \"common\\landed_titles\"\n");
+			writer.append("replace_path = \"events\"\n");
+			writer.append("replace_path = \"history\\characters\"\n");
+			writer.append("replace_path = \"history\\diplomacy\"\n");
+			writer.append("replace_path = \"history\\provinces\"\n");
+			writer.append("replace_path = \"history\\technology\"\n");
+			writer.append("replace_path = \"history\\titles\"\n");
+			writer.append("replace_path = \"history\\wars\"\n");
+			writer.append("replace_path = \"gfx\\flags\"\n");
+			writer.append("replace_path = \"localization\"\n");	
+			writer.close();
+		} catch (IOException e) {
+			Log.error("Creation of CK2-Randomizer Mod file unsuccessfull");
+			e.printStackTrace();
+		}
+		Log.info("Created Successfully");
 	}
 
 	public static Holding randomizeHolding(int rand) {
