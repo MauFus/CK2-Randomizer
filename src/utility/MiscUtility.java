@@ -7,13 +7,25 @@ import types.*;
 
 public class MiscUtility {
 
-	public static void blankFiles(File src, File dst) throws IOException {
+	/**
+	 * Create a blank copy of all the files in a specified folder
+	 * @param src - the source folder
+	 * @param dst - the destination folder
+	 */
+	public static void blankFiles(File src, File dst) {
 		if (src != null) {
 			for (File file : src.listFiles()) {
-				BufferedWriter writer = new BufferedWriter(new FileWriter(dst + "\\" + src.getName() + "\\"
-						+ file.getName()));
-				writer.append("");
-				writer.close();
+				try {
+					File toWrite = new File(dst + "\\history\\" + src.getName() + "\\" + file.getName());
+					toWrite.getParentFile().mkdirs();
+					BufferedWriter writer = new BufferedWriter(new FileWriter(toWrite));
+					writer.append("");
+					writer.close();
+					Log.info("File " + src.getName() + "\\" + file.getName() + " blanked");
+				} catch (IOException e) {
+					Log.error("Trouble during Blank operation for file " + src.getName() + "\\" + file.getName());
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -36,7 +48,9 @@ public class MiscUtility {
 
 	/**
 	 * Create the CK2 Mod file
-	 * @param fl_mod - File destination
+	 * 
+	 * @param fl_mod
+	 *            - File destination
 	 */
 	public static void initModFile(File fl_mod) {
 		Log.info("Creating CK2-Randomizer Mod file...");
@@ -56,7 +70,7 @@ public class MiscUtility {
 			writer.append("replace_path = \"history\\titles\"\n");
 			writer.append("replace_path = \"history\\wars\"\n");
 			writer.append("replace_path = \"gfx\\flags\"\n");
-			writer.append("replace_path = \"localization\"\n");	
+			writer.append("replace_path = \"localization\"\n");
 			writer.close();
 		} catch (IOException e) {
 			Log.error("Creation of CK2-Randomizer Mod file unsuccessfull");
