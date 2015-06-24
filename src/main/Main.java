@@ -19,6 +19,7 @@ public class Main {
 		// Parameters
 		File src_provinces = new File(src_folder.getAbsolutePath() + "\\history\\provinces");
 		File src_diplomacy = new File(src_folder.getAbsolutePath() + "\\history\\diplomacy");
+		File src_tech = new File(src_folder.getAbsolutePath() + "\\history\\technology");
 		File src_wars = new File(src_folder.getAbsolutePath() + "\\history\\wars");
 		File src_titles = new File(src_folder.getAbsolutePath() + "\\history\\titles");
 		File src_dynasties = new File(src_folder.getAbsolutePath() + "\\common\\dynasties\\00_dynasties.txt");
@@ -43,8 +44,21 @@ public class Main {
 		Log.openLog();
 		MiscUtility.initModFile(file_mod);
 		
+		// Blank Diplomacy
+		Log.info("Start blanking historical Diplomacy");
 		MiscUtility.blankFiles(src_diplomacy, dst_mod);
-		// MiscUtility.blankFiles(src_wars, dst_mod);
+		Log.info("Diplomacy blanked");
+		
+		// Blank Wars
+		Log.info("Start blanking historical Wars");
+		MiscUtility.blankFiles(src_wars, dst_mod);
+		Log.info("Wars Blanked");
+		
+		// Blank Tech
+		Log.info("Start blanking historical Technology");
+		MiscUtility.blankFiles(src_tech, dst_mod);
+		Log.info("Technology Blanked");
+		
 		TitleUtility.blankTitles(src_titles, dst_mod);
 		// TitleUtility.blankTitles(new File(dst_mod + "\\history\\titles\\"), dst_mod);
 		dynasties = MiscUtility.initDynasties(src_dynasties);
