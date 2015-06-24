@@ -76,7 +76,7 @@ public class MiscUtility {
 			Log.error("Creation of CK2-Randomizer Mod file unsuccessfull");
 			e.printStackTrace();
 		}
-		Log.info("Created Successfully");
+		Log.info("Created Successfully\n");
 	}
 
 	public static Holding randomizeHolding(int rand) {

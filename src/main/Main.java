@@ -47,17 +47,17 @@ public class Main {
 		// Blank Diplomacy
 		Log.info("Start blanking historical Diplomacy");
 		MiscUtility.blankFiles(src_diplomacy, dst_mod);
-		Log.info("Diplomacy blanked");
+		Log.info("Diplomacy blanked\n");
 		
 		// Blank Wars
 		Log.info("Start blanking historical Wars");
 		MiscUtility.blankFiles(src_wars, dst_mod);
-		Log.info("Wars Blanked");
+		Log.info("Wars blanked\n");
 		
 		// Blank Tech
 		Log.info("Start blanking historical Technology");
 		MiscUtility.blankFiles(src_tech, dst_mod);
-		Log.info("Technology Blanked");
+		Log.info("Technology blanked\n");
 		
 		TitleUtility.blankTitles(src_titles, dst_mod);
 		// TitleUtility.blankTitles(new File(dst_mod + "\\history\\titles\\"), dst_mod);
