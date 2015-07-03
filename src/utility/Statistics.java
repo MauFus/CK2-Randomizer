@@ -3,6 +3,7 @@ package utility;
 public class Statistics {
 
 	private static int cnt_Province = 0;
+	private static int cnt_dynasties = 0;
 	private static int[] stats_holding = new int[4];
 	private static int[] stats_culture = new int[92];
 	private static int[] stats_religion = new int[14];
@@ -35,5 +36,13 @@ public class Statistics {
 	
 	public static void countHeresy(int i) {
 		stats_heresy[i]++;
+	}
+	
+	public static void countDynasties() {
+		cnt_dynasties++;
+	}
+	
+	public static int getDynasties() {
+		return cnt_dynasties;
 	}
 }

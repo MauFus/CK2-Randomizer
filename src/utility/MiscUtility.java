@@ -9,8 +9,11 @@ public class MiscUtility {
 
 	/**
 	 * Create a blank copy of all the files in a specified folder
-	 * @param src - the source folder
-	 * @param dst - the destination folder
+	 * 
+	 * @param src
+	 *            - the source folder
+	 * @param dst
+	 *            - the destination folder
 	 */
 	public static void blankFiles(File src, File dst) {
 		if (src != null) {
@@ -72,28 +75,47 @@ public class MiscUtility {
 			return Holding.city;
 	}
 
-	public static ArrayList<ArrayList<Long>> initDynasties(File src_dynasties) throws IOException {
+	/**
+	 * It lists all the dynasties available in the game, splitted by culture
+	 * 
+	 * @param src_dynasties
+	 *            - source dynasties file
+	 * @return a list of list of dynasties
+	 */
+	public static ArrayList<ArrayList<Long>> initDynasties(File src_dynasties) {
+		// Initialize a new arrayList of list
 		ArrayList<ArrayList<Long>> dynasties = new ArrayList<ArrayList<Long>>();
 		for (int i = 0; i < 92; i++)
 			dynasties.add(new ArrayList<Long>());
-		String line;
-		BufferedReader reader = new BufferedReader(new FileReader(src_dynasties));
-		while ((line = reader.readLine()) != null) {
-			Long id = 0l;
-			if (line.split("=")[0].trim().matches("-?\\d+(\\.\\d+)?")) {
-				id = Long.parseLong(line.split("=")[0].trim());
-				while (!line.contains("culture")) {
-					line = reader.readLine();
-				}
-				if (line.contains("=")) {
-					Culture culture = Culture.valueOf(line.split("=")[1].split("#")[0].trim().replace("\"", ""));
-					dynasties.get(culture.ordinal()).add(id);
+		
+		String line = "";
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(src_dynasties));
+			while ((line = reader.readLine()) != null) {
+				Long id = 0l;
+				if (line.split("=")[0].trim().matches("-?\\d+(\\.\\d+)?")) {
+					id = Long.parseLong(line.split("=")[0].trim());
+					while (!line.contains("culture")) {
+						line = reader.readLine();
+					}
+					if (line.contains("=")) {
+						Culture culture = Culture.valueOf(line.split("=")[1].split("#")[0].trim().replace("\"", ""));
+						dynasties.get(culture.ordinal()).add(id);
+						Statistics.countDynasties();
+					}
 				}
 			}
+			reader.close();
+		} catch (NumberFormatException e) {
+			Log.error("Error in parsing Dynasty code: " + line.split("=")[0].trim());
+			e.printStackTrace();
+		}catch (IOException e) {
+			Log.error("I/O Error with file : " + src_dynasties.getName() + "\\" + src_dynasties.getName());
+			e.printStackTrace();
 		}
-		reader.close();
+		Log.info("Number of dynasties retrieved: " + Statistics.getDynasties());
 		return dynasties;
-
 	}
 
 	public static ArrayList<ArrayList<String>> initNames(File src_names) throws IOException {

@@ -58,10 +58,12 @@ public class Main {
 		Log.info("Start blanking historical Technology");
 		MiscUtility.blankFiles(src_tech, dst_mod);
 		Log.info("Technology blanked\n");
+
+		Log.info("Retrieving dynasties...");
+		dynasties = MiscUtility.initDynasties(src_dynasties);
 		
 		TitleUtility.blankTitles(src_titles, dst_mod);
 		// TitleUtility.blankTitles(new File(dst_mod + "\\history\\titles\\"), dst_mod);
-		dynasties = MiscUtility.initDynasties(src_dynasties);
 		names = MiscUtility.initNames(src_names);
 
 		// Main Loop
