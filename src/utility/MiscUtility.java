@@ -30,22 +30,6 @@ public class MiscUtility {
 		}
 	}
 
-	public static void doubleFile(File file) throws IOException {
-		if (file != null) {
-			String line = "";
-			String toAppend = "";
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-			while ((line = reader.readLine()) != null) {
-				toAppend = toAppend.concat(line + "\n");
-			}
-			writer.append(toAppend);
-			reader.close();
-			writer.close();
-
-		}
-	}
-
 	/**
 	 * Create the CK2 Mod file
 	 * 
