@@ -87,7 +87,7 @@ public class MiscUtility {
 		ArrayList<ArrayList<Long>> dynasties = new ArrayList<ArrayList<Long>>();
 		for (int i = 0; i < 92; i++)
 			dynasties.add(new ArrayList<Long>());
-		
+
 		String line = "";
 		BufferedReader reader;
 		try {
@@ -110,7 +110,7 @@ public class MiscUtility {
 		} catch (NumberFormatException e) {
 			Log.error("Error in parsing Dynasty code: " + line.split("=")[0].trim());
 			e.printStackTrace();
-		}catch (IOException e) {
+		} catch (IOException e) {
 			Log.error("I/O Error with file : " + src_dynasties.getName() + "\\" + src_dynasties.getName());
 			e.printStackTrace();
 		}
@@ -118,29 +118,56 @@ public class MiscUtility {
 		return dynasties;
 	}
 
-	public static ArrayList<ArrayList<String>> initNames(File src_names) throws IOException {
+	/**
+	 * It lists all the possible male names, splitted by culture
+	 * 
+	 * @param src_names
+	 *            - names source file
+	 * @return a list of list of names
+	 */
+	public static ArrayList<ArrayList<String>> initNames(File src_names) {
+		// Initialize all the lists
 		ArrayList<ArrayList<String>> names = new ArrayList<ArrayList<String>>();
 		for (int i = 0; i < 92; i++)
 			names.add(new ArrayList<String>());
+		
+		// Loop for each culture
 		for (int j = 0; j < 92; j++) {
 			String line;
-			BufferedReader reader = new BufferedReader(new FileReader(src_names));
-			String culture = Culture.values()[j].toString();
-			while ((line = reader.readLine()) != null) {
-				if (line.trim().startsWith(culture + " = {") || line.contains("lappish")) {
-					while (!(line = reader.readLine()).trim().startsWith("male_names = {")) {
-						// do nothing
-					}
-					while (!(line = reader.readLine()).contains("}")) {
-						String splitted[] = line.split(" ");
-						for (String string : splitted) {
-							names.get(j).add(string.split("_")[0].trim());
+			BufferedReader reader;
+			try {
+				reader = new BufferedReader(new FileReader(src_names));
+				String culture = Culture.values()[j].toString();
+				while ((line = reader.readLine()) != null) {
+					// Find specific culture
+					if (line.trim().startsWith(culture + " = {") || line.contains("lappish")) {
+						while (!(line = reader.readLine()).trim().startsWith("male_names = {")) {
+							// do nothing
+						}
+						while (!(line = reader.readLine()).contains("}")) {
+							// Skip commented names
+							if (!line.startsWith("#")) {
+								String splitted[] = line.split(" ");
+								for (String string : splitted) {
+									// Skip empty strings
+									if (string.trim().length() > 1) {
+										// Register only culture specific name
+										names.get(j).add(string.split("_")[0].trim());
+										Statistics.countNames();
+									}
+								}
+							}
 						}
 					}
 				}
+				reader.close();
+			} catch (IOException e) {
+				Log.error("I/O Error with file : " + src_names.getName() + "\\" + src_names.getName());
+				e.printStackTrace();
 			}
-			reader.close();
+
 		}
+		Log.info("Number of character names retrieved: " + Statistics.getNames());
 		return names;
 	}
 }

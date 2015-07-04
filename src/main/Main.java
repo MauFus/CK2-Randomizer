@@ -62,14 +62,16 @@ public class Main {
 		Log.info("Retrieving dynasties...");
 		dynasties = MiscUtility.initDynasties(src_dynasties);
 		
+		Log.info("Retrieving character names...");
+		names = MiscUtility.initNames(src_names);
+		
 		TitleUtility.blankTitles(src_titles, dst_mod);
 		// TitleUtility.blankTitles(new File(dst_mod + "\\history\\titles\\"), dst_mod);
-		names = MiscUtility.initNames(src_names);
 
 		// Main Loop
 		for (int k = 0; k < src_provinces.listFiles().length; k++) {
 			File file_province = src_provinces.listFiles()[k];
-			Log.write("Start on: " + file_province.getName());
+			//Log.write("Start on: " + file_province.getName());
 			Statistics.countProvince();
 			Holding holding = MiscUtility.randomizeHolding(random.nextInt(100));
 			Culture culture = Culture.values()[random.nextInt(92)];

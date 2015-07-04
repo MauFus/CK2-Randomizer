@@ -4,6 +4,7 @@ public class Statistics {
 
 	private static int cnt_Province = 0;
 	private static int cnt_dynasties = 0;
+	private static int cnt_names = 0;
 	private static int[] stats_holding = new int[4];
 	private static int[] stats_culture = new int[92];
 	private static int[] stats_religion = new int[14];
@@ -44,5 +45,13 @@ public class Statistics {
 	
 	public static int getDynasties() {
 		return cnt_dynasties;
+	}
+	
+	public static void countNames() {
+		cnt_names++;
+	}
+	
+	public static int getNames() {
+		return cnt_names;
 	}
 }
