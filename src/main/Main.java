@@ -32,7 +32,7 @@ public class Main {
 		File dst_republics = new File(dst_mod.getAbsolutePath() + "\\common\\landed_titles\\republic_duchies.txt");
 		File dst_flags = new File(dst_mod.getAbsolutePath() + "\\gfx\\flags");
 		File dst_republic_names = new File(dst_mod.getAbsolutePath() + "\\localisation\\republic_names.csv");
-		
+
 		// Execution Variables
 		boolean lessRandomMode = true;
 		Random random = new Random();
@@ -43,17 +43,17 @@ public class Main {
 		// Creation of Mod file
 		Log.openLog();
 		MiscUtility.initModFile(file_mod);
-		
+
 		// Blank Diplomacy
 		Log.info("Start blanking historical Diplomacy");
 		MiscUtility.blankFiles(src_diplomacy, dst_mod);
 		Log.info("Diplomacy blanked\n");
-		
+
 		// Blank Wars
 		Log.info("Start blanking historical Wars");
 		MiscUtility.blankFiles(src_wars, dst_mod);
 		Log.info("Wars blanked\n");
-		
+
 		// Blank Tech
 		Log.info("Start blanking historical Technology");
 		MiscUtility.blankFiles(src_tech, dst_mod);
@@ -61,21 +61,24 @@ public class Main {
 
 		Log.info("Retrieving dynasties...");
 		dynasties = MiscUtility.initDynasties(src_dynasties);
-		
+
 		Log.info("Retrieving character names...");
 		names = MiscUtility.initNames(src_names);
-		
+
+		// TODO verificarne l'utilità e le funzioni
 		TitleUtility.blankTitles(src_titles, dst_mod);
-		// TitleUtility.blankTitles(new File(dst_mod + "\\history\\titles\\"), dst_mod);
+		// TitleUtility.blankTitles(new File(dst_mod + "\\history\\titles\\"),
+		// dst_mod);
 
 		// Main Loop
 		for (int k = 0; k < src_provinces.listFiles().length; k++) {
 			File file_province = src_provinces.listFiles()[k];
-			//Log.write("Start on: " + file_province.getName());
+			// Log.write("Start on: " + file_province.getName());
 			Statistics.countProvince();
 			Holding holding = MiscUtility.randomizeHolding(random.nextInt(100));
 			Culture culture = Culture.values()[random.nextInt(92)];
-			String provinceResult = ProvinceUtility.randomizeProvince(lessRandomMode, file_province, dst_mod, holding, culture, random);
+			String provinceResult = ProvinceUtility.randomizeProvince(lessRandomMode, file_province, dst_mod, holding,
+					culture, random);
 			Long dinastia = CharacterUtility.selectDynasty(dynasties, culture);
 			// for (int h = 0; h < 50; h++)
 			CharacterUtility.randomizeCharacter(k, new File(dst_mod + "\\history\\characters\\custom.txt"), culture,
@@ -96,6 +99,11 @@ public class Main {
 						StandardCopyOption.REPLACE_EXISTING);
 			}
 		}
+		// Write Statistics in log File
+		Log.info("Culture Distribution");
+		for (int i = 0; i < 92; i++)
+			Log.info("Province with culture " + Culture.values()[i].toString() + ": " + Statistics.getCultureNumber(i));
+
 		Log.closeLog();
 	}
 }

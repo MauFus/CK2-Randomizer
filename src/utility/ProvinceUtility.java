@@ -83,8 +83,8 @@ public class ProvinceUtility {
 		}
 	}
 
-	public static String randomizeProvince(boolean lessRandomMode, File src, File dst, Holding holding, Culture culture, Random random)
-			throws IOException {
+	public static String randomizeProvince(boolean lessRandomMode, File src, File dst, Holding holding,
+			Culture culture, Random random) throws IOException {
 		String title = "";
 		String religion = "";
 		String number = src.getName().split("-")[0].trim();
@@ -128,13 +128,12 @@ public class ProvinceUtility {
 
 							// Define main holding
 							if (!flag_holding) {
-								
-								
+
 								// LessRandomMode
 								if (lessRandomMode) {
 									holding = Holding.valueOf(line.split("=")[1].split("#")[0].trim());
 									int rand_holding;
-									if ((rand_holding = random.nextInt(100)) > 55){
+									if ((rand_holding = random.nextInt(100)) > 55) {
 										if (rand_holding < 67)
 											holding = Holding.castle;
 										else if (rand_holding < 78)
@@ -145,7 +144,7 @@ public class ProvinceUtility {
 											holding = Holding.tribal;
 									}
 								}
-								
+
 								if (ProvinceUtility.isHolySite(line.split("=")[0].trim()))
 									holding = Holding.temple;
 
@@ -174,17 +173,20 @@ public class ProvinceUtility {
 										else
 											writer.append("#" + line + "\n");
 									} else if (line.trim().startsWith("culture")) {
-										
-										// LessRandomMode
-										//
-										
+
+										if (lessRandomMode) {
+											Culture currentCulture = Culture.valueOf(line.split("=")[1].split("#")[0]
+													.trim());
+											culture = ProvinceUtility.calculateBestCulture(currentCulture);
+										}
+
 										writer.append("culture = " + culture + "\n");
 										Statistics.countCulture(culture.ordinal());
 									} else if (line.trim().startsWith("religion")) {
 
 										// LessRandomMode
 										//
-										
+
 										int rand = random.nextInt(100);
 										if (rand < 15) {
 											writer.append("religion = " + Religion.catholic + "\n");
@@ -264,6 +266,443 @@ public class ProvinceUtility {
 		return title.concat(";").concat(religion).concat(";").concat(number);
 	}
 
+	/**
+	 * Calculate the best culture for LessRandomMode
+	 * 
+	 * @param currentCulture
+	 *            - current culture of a province
+	 * @return - new culture to apply to the province
+	 */
+	private static Culture calculateBestCulture(Culture currentCulture) {
+		Random random = new Random();
+		// By default we keep current culture
+		Culture newCulture = currentCulture;
+		switch (currentCulture) {
+		case afghan:
+			if (random.nextInt(8) < 4)
+				newCulture = Culture.kirghiz;
+			break;
+		case alan:
+			// Do nothing
+			break;
+		case andalusian_arabic:
+			// Do nothing
+			break;
+		case armenian:
+			int ar = random.nextInt(15);
+			if (ar < 4)
+				newCulture = Culture.alan;
+			else if (ar >= 4 && ar < 8)
+				newCulture = Culture.georgian;
+			break;
+		case ashkenazi:
+			// Do nothing
+			break;
+		case assamese:
+			// Do nothing
+			break;
+		case avar:
+			if (random.nextInt(19) < 6)
+				newCulture = Culture.hungarian;
+			break;
+		case baloch:
+			newCulture = Culture.afghan;
+			break;
+		case basque:
+			// Do nothing
+			break;
+		case bedouin_arabic:
+			int bd = random.nextInt(24);
+			if (bd < 3)
+				newCulture = Culture.somali;
+			else if (bd >= 3 && bd < 16)
+				newCulture = Culture.baloch;
+			break;
+		case bengali:
+			int be = random.nextInt(27);
+			if (be < 8)
+				newCulture = Culture.assamese;
+			else if (be >= 8 && be < 12)
+				newCulture = Culture.oriya;
+			break;
+		case bohemian:
+			// Do nothing
+			break;
+		case bolghar:
+			newCulture = Culture.mordvin;
+			break;
+		case breton:
+			// Do nothing
+			break;
+		case bulgarian:
+			// Do nothing
+			break;
+		case castillan:
+			// Do nothing
+			break;
+		case catalan:
+			// Do nothing
+			break;
+		case croatian:
+			if (random.nextInt(17) < 4)
+				newCulture = Culture.serbian;
+			break;
+		case cuman:
+			newCulture = Culture.komi;
+			break;
+		case danish:
+			// Do nothing
+			break;
+		case dutch:
+			// Do nothing
+			break;
+		case egyptian_arabic:
+			// Do nothing
+			break;
+		case english:
+			// Do nothing
+			break;
+		case ethiopian:
+			if (random.nextInt(17) < 7)
+				newCulture = Culture.somali;
+			break;
+		case finnish:
+			int fn = random.nextInt(15);
+			if (fn < 2)
+				newCulture = Culture.ugricbaltic;
+			else if (fn >= 2 && fn < 6)
+				newCulture = Culture.lappish;
+			break;
+		case frankish:
+			// Do nothing
+			break;
+		case frisian:
+			// Do nothing
+			break;
+		case georgian:
+			if (random.nextInt(7) < 2)
+				newCulture = Culture.alan;
+			break;
+		case german:
+			int gr = random.nextInt(32);
+			if (gr < 10)
+				newCulture = Culture.old_frankish;
+			else if (gr >= 10 && gr < 18)
+				newCulture = Culture.old_saxon;
+			break;
+		case greek:
+			int gk = random.nextInt(73);
+			if (gk < 6)
+				newCulture = Culture.bulgarian;
+			else if (gk >= 6 && gk < 17)
+				newCulture = Culture.romanian;
+			else if (gk >= 17 && gk < 21)
+				newCulture = Culture.georgian;
+			else if (gk >= 21 && gk < 28)
+				newCulture = Culture.armenian;
+			else if (gk >= 28 && gk < 43)
+				newCulture = Culture.pecheneg;
+			else if (gk >= 43 && gk < 58)
+				newCulture = Culture.turkish;
+			break;
+		case gujurati:
+			// Do nothing
+			break;
+		case hindustani:
+			int hi = random.nextInt(41);
+			if (hi < 5)
+				newCulture = Culture.oriya;
+			else if (hi >= 5 && hi < 13)
+				newCulture = Culture.rajput;
+			else if (hi >= 13 && hi < 25)
+				newCulture = Culture.karluk;
+			break;
+		case hungarian:
+			// Do nothing
+			break;
+		case ilmenian:
+			int il = random.nextInt(13);
+			if (il < 7)
+				newCulture = Culture.lettigallish;
+			else if (il >= 7 && il < 12)
+				newCulture = Culture.lithuanian;
+			break;
+		case irish:
+			if (random.nextInt(15) < 4)
+				newCulture = Culture.scottish;
+			break;
+		case italian:
+			if (random.nextInt(18) < 4)
+				newCulture = Culture.roman;
+			break;
+		case kannada:
+			if (random.nextInt(19) < 3)
+				newCulture = Culture.tamil;
+			break;
+		case karluk:
+			newCulture = Culture.khanty;
+			break;
+		case khanty:
+			if (random.nextInt(5) < 2)
+				newCulture = Culture.komi;
+			break;
+		case khazar:
+			int kh = random.nextInt(16);
+			if (kh < 4)
+				newCulture = Culture.mordvin;
+			else
+				newCulture = Culture.severian;
+			break;
+		case kirghiz:
+			newCulture = Culture.khanty;
+			break;
+		case komi:
+			newCulture = Culture.samoyed;
+			break;
+		case kurdish:
+			if (random.nextInt(15) < 10)
+				newCulture = Culture.persian;
+			break;
+		case lappish:
+			// Do nothing
+			break;
+		case lettigallish:
+			// Do nothing
+			break;
+		case levantine_arabic:
+			int lv = random.nextInt(60);
+			if (lv < 15)
+				newCulture = Culture.ashkenazi;
+			else if (lv >= 15 && lv < 30)
+				newCulture = Culture.sephardi;
+			else if (lv >= 30 && lv < 40)
+				newCulture = Culture.kurdish;
+			else if (lv >= 40 && lv < 45)
+				newCulture = Culture.bedouin_arabic;
+			break;
+		case lithuanian:
+			if (random.nextInt(7) < 2)
+				newCulture = Culture.prussian;
+			break;
+		case lombard:
+			if (random.nextInt(24) < 10)
+				newCulture = Culture.roman;
+			break;
+		case maghreb_arabic:
+			int mg = random.nextInt(46);
+			if (mg < 15)
+				newCulture = Culture.andalusian_arabic;
+			else if (mg >= 15 && mg < 30)
+				newCulture = Culture.nahuatl;
+			else if (mg >= 30 && mg < 31)
+				newCulture = Culture.manden;
+			break;
+		case manden:
+			// Do nothing
+			break;
+		case marathi:
+			if (random.nextInt(21) < 5)
+				newCulture = Culture.gujurati;
+			break;
+		case mongol:
+			// Do nothing
+			break;
+		case mordvin:
+			int mr = random.nextInt(24);
+			if (mr < 12)
+				newCulture = Culture.russian;
+			else if (mr >= 12 && mr < 23)
+				newCulture = Culture.ilmenian;
+			break;
+		case nahuatl:
+			// Do nothing
+			break;
+		case norman:
+			// Do nothing
+			break;
+		case norse:
+			int nr = random.nextInt(4);
+			switch (nr) {
+			case 1:
+				newCulture = Culture.danish;
+				break;
+			case 2:
+				newCulture = Culture.norwegian;
+				break;
+			case 3:
+				newCulture = Culture.swedish;
+				break;
+			default:
+				break;
+			}
+			break;
+		case norwegian:
+			// Do nothing
+			break;
+		case nubian:
+			if (random.nextInt(16) < 3)
+				newCulture = Culture.ethiopian;
+			break;
+		case occitan:
+			// Do nothing
+			break;
+		case old_frankish:
+			int of = random.nextInt(53);
+			if (of < 6)
+				newCulture = Culture.breton;
+			else if (of >= 6 && of < 20)
+				newCulture = Culture.norman;
+			else if (of >= 20 && of < 34)
+				newCulture = Culture.frankish;
+			else if (of >= 34 && of < 48)
+				newCulture = Culture.dutch;
+			break;
+		case old_saxon:
+			int os = random.nextInt(13);
+			if (os < 7)
+				newCulture = Culture.frisian;
+			break;
+		case oriya:
+			if (random.nextInt(17) < 9)
+				newCulture = Culture.sinhala;
+			break;
+		case panjabi:
+			int pj = random.nextInt(17);
+			if (pj < 4)
+				newCulture = Culture.karluk;
+			else if (pj >= 4 && pj < 8)
+				newCulture = Culture.kirghiz;
+			break;
+		case pecheneg:
+			newCulture = Culture.mongol;
+			break;
+		case persian:
+			int pe = random.nextInt(46);
+			if (pe < 4)
+				newCulture = Culture.kirghiz;
+			else if (pe >= 4 && pe < 17)
+				newCulture = Culture.bolghar;
+			else if (pe >= 17 && pe < 30)
+				newCulture = Culture.cuman;
+			else if (pe >= 30 && pe < 43)
+				newCulture = Culture.khazar;
+			break;
+		case pictish:
+			// Do nothing
+			break;
+		case polish:
+			// Do nothing
+			break;
+		case pommeranian:
+			// Do nothing
+			break;
+		case portuguese:
+			// Do nothing
+			break;
+		case prussian:
+			// Do nothing
+			break;
+		case rajput:
+			int rj = random.nextInt(17);
+			if (rj < 3)
+				newCulture = Culture.sindhi;
+			else if (rj >= 3 && rj < 9)
+				newCulture = Culture.panjabi;
+			break;
+		case roman:
+			// Do nothing
+			break;
+		case romanian:
+			// Do nothing
+			break;
+		case russian:
+			// Do nothing
+			break;
+		case samoyed:
+			if (random.nextInt(7) < 1)
+				newCulture = Culture.finnish;
+			break;
+		case saxon:
+			int sx = random.nextInt(28);
+			if (sx > 11 && sx <= 23)
+				newCulture = Culture.english;
+			else if (sx > 23)
+				newCulture = Culture.scottish;
+			break;
+		case scottish:
+			// Do nothing
+			break;
+		case sephardi:
+			// Do nothing
+			break;
+		case serbian:
+			// Do nothing
+			break;
+		case severian:
+			int sv = random.nextInt(7);
+			if (sv < 4)
+				newCulture = Culture.volhynian;
+			else
+				newCulture = Culture.ilmenian;
+			break;
+		case sindhi:
+			// Do nothing
+			break;
+		case sinhala:
+			// Do nothing
+			break;
+		case somali:
+			// Do nothing
+			break;
+		case suebi:
+			// Do nothing
+			break;
+		case swedish:
+			// Do nothing
+			break;
+		case tamil:
+			// Do nothing
+			break;
+		case telugu:
+			if (random.nextInt(19) < 4)
+				newCulture = Culture.sinhala;
+			break;
+		case turkish:
+			newCulture = Culture.mongol;
+			break;
+		case ugricbaltic:
+			// Do nothing
+			break;
+		case visigothic:
+			int vs = random.nextInt(57);
+			if (vs < 5)
+				newCulture = Culture.suebi;
+			else if (vs >= 5 && vs < 9)
+				newCulture = Culture.basque;
+			else if (vs >= 9 && vs < 21)
+				newCulture = Culture.castillan;
+			else if (vs >= 21 && vs < 33)
+				newCulture = Culture.catalan;
+			else if (vs >= 33 && vs < 45)
+				newCulture = Culture.portuguese;
+			break;
+		case volhynian:
+			if (random.nextInt(9) < 3)
+				newCulture = Culture.prussian;
+			break;
+		case welsh:
+			if (random.nextInt(14) > 10)
+				newCulture = Culture.scottish;
+			break;
+		default:
+			break;
+
+		}
+
+		return newCulture;
+	}
+
+	// DEPRECATED
 	public static void randomizeProvinces(File folder) throws IOException {
 		if (folder != null) {
 			Random random = new Random();

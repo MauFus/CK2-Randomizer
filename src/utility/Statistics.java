@@ -27,6 +27,10 @@ public class Statistics {
 		stats_culture[i]++;
 	}
 	
+	public static int getCultureNumber (int i){
+		return stats_culture[i];
+	}
+	
 	public static void countReligion(int i) {
 		stats_religion[i]++;
 	}
