@@ -7,6 +7,7 @@ public class Statistics {
 	private static int cnt_names = 0;
 	private static int[] stats_holding = new int[4];
 	private static int[] stats_culture = new int[92];
+	private static int[] stats_global_religion = new int[41];
 	private static int[] stats_religion = new int[14];
 	private static int[] stats_pagans = new int[10];
 	private static int[] stats_heresy = new int[19];
@@ -23,12 +24,24 @@ public class Statistics {
 		stats_holding[i]++;
 	}
 	
+	public static int getHoldingNumber (int i){
+		return stats_holding[i];
+	}
+	
 	public static void countCulture(int i) {
 		stats_culture[i]++;
 	}
 	
 	public static int getCultureNumber (int i){
 		return stats_culture[i];
+	}
+	
+	public static int getReligionNumber (int i){
+		return stats_global_religion[i];
+	}
+	
+	public static void countGlobalReligion(int i) {
+		stats_global_religion[i]++;
 	}
 	
 	public static void countReligion(int i) {

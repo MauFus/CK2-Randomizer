@@ -212,6 +212,7 @@ public class ProvinceUtility {
 											GlobalReligion gReligion = ProvinceUtility
 													.calculateBestReligion(currentReligion);
 											writer.append("religion = " + gReligion.toString() + "\n");
+											Statistics.countGlobalReligion(gReligion.ordinal());
 											religion = gReligion.toString();
 
 										} else {

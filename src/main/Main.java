@@ -118,10 +118,20 @@ public class Main {
 			}
 		}
 		// Write Statistics in log File
+		Log.info("Holding Distribution");
+		for (int i = 0; i < 4; i++)
+			Log.info("Province with holding " + Holding.values()[i].toString() + ": " + Statistics.getHoldingNumber(i));
+
+		Log.write("");
 		Log.info("Culture Distribution");
 		for (int i = 0; i < 92; i++)
 			Log.info("Province with culture " + Culture.values()[i].toString() + ": " + Statistics.getCultureNumber(i));
 
+		Log.write("");
+		Log.info("Religion Distribution");
+		for (int i = 0; i < 41; i++)
+			Log.info("Province with religion " + GlobalReligion.values()[i].toString() + ": "
+					+ Statistics.getReligionNumber(i));
 		Log.closeLog();
 	}
 }
