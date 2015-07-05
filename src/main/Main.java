@@ -30,6 +30,7 @@ public class Main {
 
 		File dst_mod = new File(dst_folder.getAbsolutePath() + "\\CK2-Randomizer");
 		File file_mod = new File(dst_folder.getAbsolutePath() + "\\CK2-Randomizer.mod");
+		File dst_characters = new File(dst_mod.getAbsolutePath() + "\\history\\characters\\");
 		File dst_titles = new File(dst_mod.getAbsolutePath() + "\\history\\titles\\");
 		File dst_republics = new File(dst_mod.getAbsolutePath() + "\\common\\landed_titles\\republic_duchies.txt");
 		File dst_flags = new File(dst_mod.getAbsolutePath() + "\\gfx\\flags");
@@ -63,10 +64,12 @@ public class Main {
 
 		// Blank Characters
 		Log.info("Start blanking historical Characters");
+		for (File file : dst_characters.listFiles())
+			file.delete();
 		MiscUtility.blankFiles(src_characters, dst_mod);
 		Log.info("Characters blanked\n");
 
-		//Blank Titles
+		// Blank Titles
 		Log.info("Start blanking historical title assignation");
 		TitleUtility.blankTitles(src_titles, dst_titles);
 		Log.info("All the title de-assigned\n");
@@ -94,9 +97,10 @@ public class Main {
 			String provinceResult = ProvinceUtility.randomizeProvince(lessRandomMode, file_province, dst_mod, holding,
 					culture, random);
 			Long dinastia = CharacterUtility.selectDynasty(dynasties, culture);
-			// for (int h = 0; h < 50; h++)
-			CharacterUtility.randomizeCharacter(k, new File(dst_mod + "\\history\\characters\\custom.txt"), culture,
-					provinceResult.split(";")[1], dinastia, names.get(culture.ordinal()));
+			// Create the character for the province
+			CharacterUtility.randomizeCharacter(k, new File(dst_mod + "\\history\\characters\\custom.txt"),
+					Culture.valueOf(provinceResult.split(";")[3]), provinceResult.split(";")[1], dinastia,
+					names.get(Culture.valueOf(provinceResult.split(";")[3]).ordinal()));
 			TitleUtility.assignTitle(provinceResult.split(";")[0] + ".txt", new File(dst_mod + "\\history\\titles"),
 					3000000 + k);
 			// Repubbliche marinare
