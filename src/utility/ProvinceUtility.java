@@ -83,10 +83,28 @@ public class ProvinceUtility {
 		}
 	}
 
+	/**
+	 * Function to randomize a province features
+	 * 
+	 * @param lessRandomMode
+	 *            - flag for random mode
+	 * @param src
+	 *            - source file
+	 * @param dst
+	 *            - destination file
+	 * @param holding
+	 *            - random holding already extracted
+	 * @param culture
+	 *            - random culture already extracted
+	 * @param random
+	 *            - randomizer
+	 * @return a list of parameters
+	 */
 	public static String randomizeProvince(boolean lessRandomMode, File src, File dst, Holding holding,
 			Culture culture, Random random) throws IOException {
 		String title = "";
 		String religion = "";
+		// ID of the province
 		String number = src.getName().split("-")[0].trim();
 
 		if (src != null) {
@@ -113,6 +131,7 @@ public class ProvinceUtility {
 
 					// Define max_settlements
 					if (!flag_settle) {
+						// At least 3 settlements
 						if (Integer.parseInt(line.split("=")[1].split("#")[0].trim()) < 3)
 							writer.append("max_settlements = 3" + "\n");
 						else
@@ -130,24 +149,20 @@ public class ProvinceUtility {
 							if (!flag_holding) {
 
 								// LessRandomMode
-								if (lessRandomMode) {
-									holding = Holding.valueOf(line.split("=")[1].split("#")[0].trim());
-									int rand_holding;
-									if ((rand_holding = random.nextInt(100)) > 55) {
-										if (rand_holding < 67)
-											holding = Holding.castle;
-										else if (rand_holding < 78)
-											holding = Holding.temple;
-										else if (rand_holding < 89)
-											holding = Holding.city;
-										else
-											holding = Holding.tribal;
+								if (lessRandomMode
+										&& (holding.equals(Holding.castle) || holding.equals(Holding.tribal))) {
+									Holding originalHolding = Holding.valueOf(line.split("=")[1].split("#")[0].trim());
+									// in 70% of cases we keep original holding
+									if (random.nextInt(100) < 70) {
+										holding = originalHolding;
 									}
 								}
 
+								// Overwrite with a temple if barony is a holy site
 								if (ProvinceUtility.isHolySite(line.split("=")[0].trim()))
 									holding = Holding.temple;
 
+								// Assign holding typology
 								switch (holding) {
 								case castle:
 									writer.append(line.split("=")[0] + "= castle\n");
@@ -168,18 +183,22 @@ public class ProvinceUtility {
 								if (!line.contains("History") && !flag_history) {
 									// Continue removing other holdings
 									if (line.trim().startsWith("b_")) {
+										// But preserve Holy Sites
 										if (ProvinceUtility.isHolySite(line.split("=")[0].trim()))
 											writer.append(line + "\n");
 										else
 											writer.append("#" + line + "\n");
 									} else if (line.trim().startsWith("culture")) {
 
+										// LessRandomMode
 										if (lessRandomMode) {
 											Culture currentCulture = Culture.valueOf(line.split("=")[1].split("#")[0]
 													.trim());
+											// Overwrite random culture with a calculated one
 											culture = ProvinceUtility.calculateBestCulture(currentCulture);
 										}
 
+										// Assign culture to province
 										writer.append("culture = " + culture + "\n");
 										Statistics.countCulture(culture.ordinal());
 									} else if (line.trim().startsWith("religion")) {
@@ -263,7 +282,7 @@ public class ProvinceUtility {
 			reader.close();
 			writer.close();
 		}
-		return title.concat(";").concat(religion).concat(";").concat(number);
+		return title.concat(";").concat(religion).concat(";").concat(number).concat(";").concat(culture.toString());
 	}
 
 	/**
