@@ -74,7 +74,7 @@ public class TitleUtility {
 			for (File file : src.listFiles()) {
 				try {
 					BufferedReader reader = new BufferedReader(new FileReader(file));
-					BufferedWriter writer = new BufferedWriter(new FileWriter(dst + file.getName()));
+					BufferedWriter writer = new BufferedWriter(new FileWriter(dst + "\\" + file.getName()));
 					String line;
 					while ((line = reader.readLine()) != null) {
 						if (line.contains("liege"))
