@@ -114,7 +114,7 @@ public class MiscUtility {
 			Log.error("I/O Error with file : " + src_dynasties.getName() + "\\" + src_dynasties.getName());
 			e.printStackTrace();
 		}
-		Log.info("Number of dynasties retrieved: " + Statistics.getDynasties());
+		Log.info("Number of dynasties retrieved: " + Statistics.getDynasties() + "\n");
 		return dynasties;
 	}
 
@@ -167,7 +167,7 @@ public class MiscUtility {
 			}
 
 		}
-		Log.info("Number of character names retrieved: " + Statistics.getNames());
+		Log.info("Number of character names retrieved: " + Statistics.getNames() + "\n");
 		return names;
 	}
 }
