@@ -79,13 +79,18 @@ public class Main {
 		Log.info("Retrieving character names...");
 		names = MiscUtility.initNames(src_names);
 
-		// Main Loop
+		// Main Loop - An execution for each Province
+		Log.info("Start of Provincies Randomization");
 		for (int k = 0; k < src_provinces.listFiles().length; k++) {
+			// Select the province file
 			File file_province = src_provinces.listFiles()[k];
-			// Log.write("Start on: " + file_province.getName());
+			Log.info("Processing: " + file_province.getName());
 			Statistics.countProvince();
+			// Select a random type of holding
 			Holding holding = MiscUtility.randomizeHolding(random.nextInt(100));
+			// Select a random culture (Not LessRandomMode)
 			Culture culture = Culture.values()[random.nextInt(92)];
+			// Randomize the province
 			String provinceResult = ProvinceUtility.randomizeProvince(lessRandomMode, file_province, dst_mod, holding,
 					culture, random);
 			Long dinastia = CharacterUtility.selectDynasty(dynasties, culture);

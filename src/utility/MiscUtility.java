@@ -66,6 +66,11 @@ public class MiscUtility {
 		Log.info("Created Successfully\n");
 	}
 
+	/**
+	 * Randomize type of main holding
+	 * @param rand - randomizer
+	 * @return - the type of holding
+	 */
 	public static Holding randomizeHolding(int rand) {
 		if (rand < 70)
 			return Holding.castle;
