@@ -111,10 +111,10 @@ public class MiscUtility {
 			Log.error("Error in parsing Dynasty code: " + line.split("=")[0].trim());
 			e.printStackTrace();
 		} catch (IOException e) {
-			Log.error("I/O Error with file : " + src_dynasties.getName() + "\\" + src_dynasties.getName());
+			Log.error("I/O Error with file : " + src_dynasties.getName());
 			e.printStackTrace();
 		}
-		Log.info("Number of dynasties retrieved: " + Statistics.getDynasties());
+		Log.info("Number of dynasties retrieved: " + Statistics.getDynasties() + "\n");
 		return dynasties;
 	}
 
@@ -162,12 +162,12 @@ public class MiscUtility {
 				}
 				reader.close();
 			} catch (IOException e) {
-				Log.error("I/O Error with file : " + src_names.getName() + "\\" + src_names.getName());
+				Log.error("I/O Error with file : " + src_names.getName());
 				e.printStackTrace();
 			}
 
 		}
-		Log.info("Number of character names retrieved: " + Statistics.getNames());
+		Log.info("Number of character names retrieved: " + Statistics.getNames() + "\n");
 		return names;
 	}
 }
