@@ -57,24 +57,42 @@ public class TitleUtility {
 		writer.close();
 	}
 
-	public static void blankTitles(File src, File dst) throws IOException {
+	/**
+	 * Remove any title from any character
+	 * 
+	 * @param src
+	 *            - Source folder for title history
+	 * @param dst
+	 *            - Destination folder for modified titles
+	 */
+	public static void blankTitles(File src, File dst) {
 		if (src != null) {
+			// Delete every file in the directory. This is needed for custom
+			// republic titles
+			for (File file : dst.listFiles())
+				file.delete();
 			for (File file : src.listFiles()) {
-				BufferedReader reader = new BufferedReader(new FileReader(file));
-				BufferedWriter writer = new BufferedWriter(new FileWriter(dst + "\\history\\titles\\" + file.getName()));
-				String line;
-				while ((line = reader.readLine()) != null) {
-					if (line.contains("liege"))
-						writer.append("\n");
-					else if (line.contains("holder"))
-						writer.append("holder = 0\n");
-					else
-						writer.append(line + "\n");
-
+				try {
+					BufferedReader reader = new BufferedReader(new FileReader(file));
+					BufferedWriter writer = new BufferedWriter(new FileWriter(dst + file.getName()));
+					String line;
+					while ((line = reader.readLine()) != null) {
+						if (line.contains("liege"))
+							writer.append("\n");
+						else if (line.contains("holder"))
+							writer.append("holder = 0\n");
+						else
+							writer.append(line + "\n");
+					}
+					reader.close();
+					writer.close();
+				} catch (IOException e) {
+					Log.error("I/O Error with file : " + src.getName() + "\\" + file.getName());
+					e.printStackTrace();
 				}
-				reader.close();
-				writer.close();
 			}
+		} else {
+			Log.error("No file in Source titles directory");
 		}
 	}
 

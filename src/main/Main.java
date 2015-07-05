@@ -29,6 +29,7 @@ public class Main {
 
 		File dst_mod = new File(dst_folder.getAbsolutePath() + "\\CK2-Randomizer");
 		File file_mod = new File(dst_folder.getAbsolutePath() + "\\CK2-Randomizer.mod");
+		File dst_titles = new File(dst_mod.getAbsolutePath() + "\\history\\titles\\");
 		File dst_republics = new File(dst_mod.getAbsolutePath() + "\\common\\landed_titles\\republic_duchies.txt");
 		File dst_flags = new File(dst_mod.getAbsolutePath() + "\\gfx\\flags");
 		File dst_republic_names = new File(dst_mod.getAbsolutePath() + "\\localisation\\republic_names.csv");
@@ -59,16 +60,15 @@ public class Main {
 		MiscUtility.blankFiles(src_tech, dst_mod);
 		Log.info("Technology blanked\n");
 
+		Log.info("Start blanking historical title assignation");
+		TitleUtility.blankTitles(src_titles, dst_titles);
+		Log.info("All the title de-assigned\n");
+
 		Log.info("Retrieving dynasties...");
 		dynasties = MiscUtility.initDynasties(src_dynasties);
 
 		Log.info("Retrieving character names...");
 		names = MiscUtility.initNames(src_names);
-
-		// TODO verificarne l'utilità e le funzioni
-		TitleUtility.blankTitles(src_titles, dst_mod);
-		// TitleUtility.blankTitles(new File(dst_mod + "\\history\\titles\\"),
-		// dst_mod);
 
 		// Main Loop
 		for (int k = 0; k < src_provinces.listFiles().length; k++) {
