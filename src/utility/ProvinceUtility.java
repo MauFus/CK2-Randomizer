@@ -346,8 +346,10 @@ public class ProvinceUtility {
 				religion = GlobalReligion.paulician;
 			else if (cat >= 92 && cat < 98)
 				religion = GlobalReligion.monothelite;
-			else if (cat >= 98 && cat < 123)
-				religion = GlobalReligion.orthodox;
+			else if (cat >= 98 && cat < 108)
+				religion = GlobalReligion.miaphysite;
+			else if (cat >= 108 && cat < 123)
+				religion = GlobalReligion.nestorian;
 			break;
 		case druze:
 			// Do nothing
@@ -437,9 +439,9 @@ public class ProvinceUtility {
 				religion = GlobalReligion.hellenic_pagan;
 			else if (ort >= 25 && ort < 35)
 				religion = GlobalReligion.jewish;
-			else if (ort >= 35 && ort < 81)
+			else if (ort >= 35 && ort < 71)
 				religion = GlobalReligion.miaphysite;
-			else if (ort >= 81 && ort < 87)
+			else if (ort >= 71 && ort < 77)
 				religion = GlobalReligion.monophysite;
 			break;
 		case pagan:
@@ -457,11 +459,11 @@ public class ProvinceUtility {
 			break;
 		case slavic_pagan:
 			int sla = random.nextInt(94);
-			if (sla < 60)
+			if (sla < 45)
 				religion = GlobalReligion.nestorian;
-			else if (sla >= 60 && sla < 66)
+			else if (sla >= 45 && sla < 51)
 				religion = GlobalReligion.messalian;
-			else if (sla >= 66 && sla < 72)
+			else if (sla >= 51 && sla < 57)
 				religion = GlobalReligion.bogomilist;
 			else
 				religion = GlobalReligion.orthodox;
