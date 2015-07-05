@@ -158,7 +158,8 @@ public class ProvinceUtility {
 									}
 								}
 
-								// Overwrite with a temple if barony is a holy site
+								// Overwrite with a temple if barony is a holy
+								// site
 								if (ProvinceUtility.isHolySite(line.split("=")[0].trim()))
 									holding = Holding.temple;
 
@@ -194,7 +195,8 @@ public class ProvinceUtility {
 										if (lessRandomMode) {
 											Culture currentCulture = Culture.valueOf(line.split("=")[1].split("#")[0]
 													.trim());
-											// Overwrite random culture with a calculated one
+											// Overwrite random culture with a
+											// calculated one
 											culture = ProvinceUtility.calculateBestCulture(currentCulture);
 										}
 
@@ -204,69 +206,78 @@ public class ProvinceUtility {
 									} else if (line.trim().startsWith("religion")) {
 
 										// LessRandomMode
-										//
+										if (lessRandomMode) {
+											GlobalReligion currentReligion = GlobalReligion.valueOf(line.split("=")[1]
+													.split("#")[0].trim());
 
-										int rand = random.nextInt(100);
-										if (rand < 15) {
-											writer.append("religion = " + Religion.catholic + "\n");
-											religion = Religion.catholic.toString();
-											Statistics.countReligion(0);
-										} else if (rand >= 15 && rand < 20) {
-											writer.append("religion = " + Religion.orthodox + "\n");
-											religion = Religion.orthodox.toString();
-											Statistics.countReligion(1);
-										} else if (rand >= 20 && rand < 25) {
-											writer.append("religion = " + Religion.miaphysite + "\n");
-											religion = Religion.miaphysite.toString();
-											Statistics.countReligion(2);
-										} else if (rand >= 25 && rand < 30) {
-											writer.append("religion = " + Religion.nestorian + "\n");
-											religion = Religion.nestorian.toString();
-											Statistics.countReligion(3);
-										} else if (rand >= 30 && rand < 35) {
-											writer.append("religion = " + Religion.sunni + "\n");
-											religion = Religion.sunni.toString();
-											Statistics.countReligion(4);
-										} else if (rand >= 35 && rand < 40) {
-											writer.append("religion = " + Religion.shiite + "\n");
-											religion = Religion.shiite.toString();
-											Statistics.countReligion(6);
-										} else if (rand >= 40 && rand < 45) {
-											writer.append("religion = " + Religion.ibadi + "\n");
-											religion = Religion.ibadi.toString();
-											Statistics.countReligion(5);
-										} else if (rand >= 45 && rand < 50) {
-											writer.append("religion = " + Religion.zoroastrian + "\n");
-											religion = Religion.zoroastrian.toString();
-											Statistics.countReligion(7);
-										} else if (rand >= 50 && rand < 55) {
-											writer.append("religion = " + Religion.jewish + "\n");
-											religion = Religion.jewish.toString();
-											Statistics.countReligion(8);
-										} else if (rand >= 55 && rand < 60) {
-											writer.append("religion = " + Religion.hindu + "\n");
-											religion = Religion.hindu.toString();
-											Statistics.countReligion(9);
-										} else if (rand >= 60 && rand < 65) {
-											writer.append("religion = " + Religion.jain + "\n");
-											religion = Religion.jain.toString();
-											Statistics.countReligion(11);
-										} else if (rand >= 65 && rand < 70) {
-											writer.append("religion = " + Religion.buddhist + "\n");
-											religion = Religion.buddhist.toString();
-											Statistics.countReligion(10);
-										} else if (rand >= 70 && rand < 90) {
-											int pRand = random.nextInt(Pagans.values().length);
-											writer.append("religion = " + Pagans.values()[pRand] + "\n");
-											religion = Pagans.values()[pRand].toString();
-											Statistics.countReligion(12);
-											Statistics.countPagans(pRand);
+											GlobalReligion gReligion = ProvinceUtility
+													.calculateBestReligion(currentReligion);
+											writer.append("religion = " + gReligion.toString() + "\n");
+											religion = gReligion.toString();
+
 										} else {
-											int hRand = random.nextInt(Heresy.values().length);
-											writer.append("religion = " + Heresy.values()[hRand] + "\n");
-											religion = Heresy.values()[hRand].toString();
-											Statistics.countReligion(13);
-											Statistics.countHeresy(hRand);
+											int rand = random.nextInt(100);
+											if (rand < 15) {
+												writer.append("religion = " + Religion.catholic + "\n");
+												religion = Religion.catholic.toString();
+												Statistics.countReligion(0);
+											} else if (rand >= 15 && rand < 20) {
+												writer.append("religion = " + Religion.orthodox + "\n");
+												religion = Religion.orthodox.toString();
+												Statistics.countReligion(1);
+											} else if (rand >= 20 && rand < 25) {
+												writer.append("religion = " + Religion.miaphysite + "\n");
+												religion = Religion.miaphysite.toString();
+												Statistics.countReligion(2);
+											} else if (rand >= 25 && rand < 30) {
+												writer.append("religion = " + Religion.nestorian + "\n");
+												religion = Religion.nestorian.toString();
+												Statistics.countReligion(3);
+											} else if (rand >= 30 && rand < 35) {
+												writer.append("religion = " + Religion.sunni + "\n");
+												religion = Religion.sunni.toString();
+												Statistics.countReligion(4);
+											} else if (rand >= 35 && rand < 40) {
+												writer.append("religion = " + Religion.shiite + "\n");
+												religion = Religion.shiite.toString();
+												Statistics.countReligion(6);
+											} else if (rand >= 40 && rand < 45) {
+												writer.append("religion = " + Religion.ibadi + "\n");
+												religion = Religion.ibadi.toString();
+												Statistics.countReligion(5);
+											} else if (rand >= 45 && rand < 50) {
+												writer.append("religion = " + Religion.zoroastrian + "\n");
+												religion = Religion.zoroastrian.toString();
+												Statistics.countReligion(7);
+											} else if (rand >= 50 && rand < 55) {
+												writer.append("religion = " + Religion.jewish + "\n");
+												religion = Religion.jewish.toString();
+												Statistics.countReligion(8);
+											} else if (rand >= 55 && rand < 60) {
+												writer.append("religion = " + Religion.hindu + "\n");
+												religion = Religion.hindu.toString();
+												Statistics.countReligion(9);
+											} else if (rand >= 60 && rand < 65) {
+												writer.append("religion = " + Religion.jain + "\n");
+												religion = Religion.jain.toString();
+												Statistics.countReligion(11);
+											} else if (rand >= 65 && rand < 70) {
+												writer.append("religion = " + Religion.buddhist + "\n");
+												religion = Religion.buddhist.toString();
+												Statistics.countReligion(10);
+											} else if (rand >= 70 && rand < 90) {
+												int pRand = random.nextInt(Pagans.values().length);
+												writer.append("religion = " + Pagans.values()[pRand] + "\n");
+												religion = Pagans.values()[pRand].toString();
+												Statistics.countReligion(12);
+												Statistics.countPagans(pRand);
+											} else {
+												int hRand = random.nextInt(Heresy.values().length);
+												writer.append("religion = " + Heresy.values()[hRand] + "\n");
+												religion = Heresy.values()[hRand].toString();
+												Statistics.countReligion(13);
+												Statistics.countHeresy(hRand);
+											}
 										}
 									} else
 										writer.append(line + "\n");
@@ -283,6 +294,228 @@ public class ProvinceUtility {
 			writer.close();
 		}
 		return title.concat(";").concat(religion).concat(";").concat(number).concat(";").concat(culture.toString());
+	}
+
+	/**
+	 * calculate the best religion for province
+	 * 
+	 * @param currentReligion
+	 *            - current religion of the province
+	 * @return new religion for the province
+	 */
+	private static GlobalReligion calculateBestReligion(GlobalReligion currentReligion) {
+		Random random = new Random();
+		GlobalReligion religion = currentReligion;
+		switch (currentReligion) {
+		case aztec:
+			// Do nothing
+			break;
+		case baltic_pagan:
+			// Do nothing
+			break;
+		case bogomilist:
+			// Do nothing
+			break;
+		case buddhist:
+			int bud = random.nextInt(90);
+			if (bud < 9)
+				religion = GlobalReligion.sunni;
+			else if (bud >= 9 && bud < 30)
+				religion = GlobalReligion.zun_pagan;
+			break;
+		case cathar:
+			// Do nothing
+			break;
+		case catholic:
+			int cat = random.nextInt(304);
+			if (cat < 7)
+				religion = GlobalReligion.cathar;
+			else if (cat >= 7 && cat < 14)
+				religion = GlobalReligion.fraticelli;
+			else if (cat >= 14 && cat < 21)
+				religion = GlobalReligion.lollard;
+			else if (cat >= 21 && cat < 28)
+				religion = GlobalReligion.waldensian;
+			else if (cat >= 28 && cat < 53)
+				religion = GlobalReligion.aztec;
+			else if (cat >= 53 && cat < 80)
+				religion = GlobalReligion.jewish;
+			else if (cat >= 80 && cat < 86)
+				religion = GlobalReligion.iconoclast;
+			else if (cat >= 86 && cat < 92)
+				religion = GlobalReligion.paulician;
+			else if (cat >= 92 && cat < 98)
+				religion = GlobalReligion.monothelite;
+			else if (cat >= 98 && cat < 123)
+				religion = GlobalReligion.orthodox;
+			break;
+		case druze:
+			// Do nothing
+			break;
+		case finnish_pagan:
+			int fin = random.nextInt(69);
+			if (fin < 24)
+				religion = GlobalReligion.tengri_pagan;
+			else if (fin >= 24 && fin < 45)
+				religion = GlobalReligion.pagan;
+			break;
+		case fraticelli:
+			// Do nothing
+			break;
+		case hellenic_pagan:
+			// Do nothing
+			break;
+		case hindu:
+			if (random.nextInt(66) < 6)
+				religion = GlobalReligion.sunni;
+			break;
+		case hurufi:
+			// Do nothing
+			break;
+		case ibadi:
+			// Do nothing
+			break;
+		case iconoclast:
+			// Do nothing
+			break;
+		case jain:
+			if (random.nextInt(78) < 18)
+				religion = GlobalReligion.ibadi;
+			break;
+		case jewish:
+			// Do nothing
+			break;
+		case karaite:
+			// Do nothing
+			break;
+		case kharijite:
+			religion = GlobalReligion.west_african_pagan;
+			break;
+		case lollard:
+			// Do nothing
+			break;
+		case manichean:
+			if (random.nextInt(9) < 3)
+				religion = GlobalReligion.zoroastrian;
+			break;
+		case mazdaki:
+			religion = GlobalReligion.shiite;
+			break;
+		case messalian:
+			// Do nothing
+			break;
+		case miaphysite:
+			int mia = random.nextInt(56);
+			if (mia < 24)
+				religion = GlobalReligion.ibadi;
+			else if (mia >= 24 && mia < 30)
+				religion = GlobalReligion.kharijite;
+			else if (mia >= 30 && mia < 36)
+				religion = GlobalReligion.shiite;
+			else if (mia >= 36 && mia < 42)
+				religion = GlobalReligion.jewish;
+			break;
+		case monophysite:
+			// Do nothing
+			break;
+		case monothelite:
+			religion = GlobalReligion.jewish;
+			break;
+		case nestorian:
+			religion = GlobalReligion.samaritan;
+			break;
+		case norse_pagan:
+			int nor = random.nextInt(58);
+			if (nor < 25)
+				religion = GlobalReligion.slavic_pagan;
+			else if (nor >= 25 && nor < 33)
+				religion = GlobalReligion.baltic_pagan;
+			break;
+		case orthodox:
+			int ort = random.nextInt(104);
+			if (ort < 25)
+				religion = GlobalReligion.hellenic_pagan;
+			else if (ort >= 25 && ort < 35)
+				religion = GlobalReligion.jewish;
+			else if (ort >= 35 && ort < 81)
+				religion = GlobalReligion.miaphysite;
+			else if (ort >= 81 && ort < 87)
+				religion = GlobalReligion.monophysite;
+			break;
+		case pagan:
+			// Do nothing
+			break;
+		case paulician:
+			// Do nothing
+			break;
+		case samaritan:
+			// Do nothing
+			break;
+		case shiite:
+			if (random.nextInt(8) < 6)
+				religion = GlobalReligion.druze;
+			break;
+		case slavic_pagan:
+			int sla = random.nextInt(94);
+			if (sla < 60)
+				religion = GlobalReligion.nestorian;
+			else if (sla >= 60 && sla < 66)
+				religion = GlobalReligion.messalian;
+			else if (sla >= 66 && sla < 72)
+				religion = GlobalReligion.bogomilist;
+			else
+				religion = GlobalReligion.orthodox;
+			break;
+		case sunni:
+			int sun = random.nextInt(93);
+			if (sun < 8)
+				religion = GlobalReligion.ibadi;
+			else if (sun >= 8 && sun < 14)
+				religion = GlobalReligion.hurufi;
+			else if (sun >= 14 && sun < 41)
+				religion = GlobalReligion.shiite;
+			else if (sun >= 41 && sun < 47)
+				religion = GlobalReligion.yazidi;
+			break;
+		case tengri_pagan:
+			int ten = random.nextInt(72);
+			if (ten < 50)
+				religion = GlobalReligion.zoroastrian;
+			else if (ten >= 50 && ten < 53)
+				religion = GlobalReligion.pagan;
+			else if (ten >= 53 && ten < 59)
+				religion = GlobalReligion.karaite;
+			else
+				religion = GlobalReligion.jewish;
+			break;
+		case waldensian:
+			// Do nothing
+			break;
+		case west_african_pagan:
+			// Do nothing
+			break;
+		case yazidi:
+			// Do nothing
+			break;
+		case zikri:
+			// Do nothing
+			break;
+		case zoroastrian:
+			int zor = random.nextInt(42);
+			if (zor < 22)
+				religion = GlobalReligion.shiite;
+			else if (zor >= 22 && zor < 28)
+				religion = GlobalReligion.zikri;
+			else if (zor >= 28 && zor < 34)
+				religion = GlobalReligion.mazdaki;
+			break;
+		case zun_pagan:
+			// Do nothing
+			break;
+		default:
+			break;
+		}
+		return religion;
 	}
 
 	/**
