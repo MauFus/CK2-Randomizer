@@ -19,6 +19,7 @@ public class Main {
 		// Parameters
 		File src_provinces = new File(src_folder.getAbsolutePath() + "\\history\\provinces");
 		File src_diplomacy = new File(src_folder.getAbsolutePath() + "\\history\\diplomacy");
+		File src_characters = new File(src_folder.getAbsolutePath() + "\\history\\characters");
 		File src_tech = new File(src_folder.getAbsolutePath() + "\\history\\technology");
 		File src_wars = new File(src_folder.getAbsolutePath() + "\\history\\wars");
 		File src_titles = new File(src_folder.getAbsolutePath() + "\\history\\titles");
@@ -60,13 +61,21 @@ public class Main {
 		MiscUtility.blankFiles(src_tech, dst_mod);
 		Log.info("Technology blanked\n");
 
+		// Blank Characters
+		Log.info("Start blanking historical Characters");
+		MiscUtility.blankFiles(src_characters, dst_mod);
+		Log.info("Characters blanked\n");
+
+		//Blank Titles
 		Log.info("Start blanking historical title assignation");
 		TitleUtility.blankTitles(src_titles, dst_titles);
 		Log.info("All the title de-assigned\n");
 
+		// Retrieve possible Dynasties
 		Log.info("Retrieving dynasties...");
 		dynasties = MiscUtility.initDynasties(src_dynasties);
 
+		// Retrieve possible Character names
 		Log.info("Retrieving character names...");
 		names = MiscUtility.initNames(src_names);
 
