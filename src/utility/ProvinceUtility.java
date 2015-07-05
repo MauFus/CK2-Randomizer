@@ -149,8 +149,7 @@ public class ProvinceUtility {
 							if (!flag_holding) {
 
 								// LessRandomMode
-								if (lessRandomMode
-										&& (holding.equals(Holding.castle) || holding.equals(Holding.tribal))) {
+								if (lessRandomMode && holding.equals(Holding.tribal)) {
 									Holding originalHolding = Holding.valueOf(line.split("=")[1].split("#")[0].trim());
 									// in 70% of cases we keep original holding
 									if (random.nextInt(100) < 70) {
