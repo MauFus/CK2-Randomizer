@@ -15,14 +15,14 @@ public class CharacterUtility {
 			Long dinastia, ArrayList<String> names) throws IOException {
 		Random rand = new Random();
 		BufferedWriter writer = new BufferedWriter(new FileWriter(dst, true));
-		writer.append((3000000 + id) + "= {\n");
+		writer.append(id + "= {\n");
 		writer.append("\tname=" + names.get(rand.nextInt(names.size())) + "\n");
 		writer.append("\tdynasty=" + dinastia + "\n");
 		writer.append("\treligion = \"" + religion + "\"\n");
 		writer.append("\tculture = \"" + culture + "\"\n");
 		int age = 724 + rand.nextInt(30);
-		writer.append("\t" + age + ".1.1 = {\n");
-		writer.append("\t\tbirth=\"" + age + ".1.1\"\n");
+		writer.append("\t" + age + "." + (1 + rand.nextInt(12)) + "." + (1 + rand.nextInt(28)) + " = {\n");
+		writer.append("\t\tbirth=yes\n");
 		writer.append("\t}\n}\n\n");
 		writer.close();
 	}

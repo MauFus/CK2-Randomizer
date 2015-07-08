@@ -96,19 +96,19 @@ public class Main {
 			// Randomize the province
 			String provinceResult = ProvinceUtility.randomizeProvince(lessRandomMode, file_province, dst_mod, holding,
 					culture, random);
-			Long dinastia = CharacterUtility.selectDynasty(dynasties, culture);
+			Long dinastia = CharacterUtility.selectDynasty(dynasties, Culture.valueOf(provinceResult.split(";")[3]));
 			// Create the character for the province
-			CharacterUtility.randomizeCharacter(k, new File(dst_mod + "\\history\\characters\\custom.txt"),
+			CharacterUtility.randomizeCharacter(1000 + k, new File(dst_mod + "\\history\\characters\\custom.txt"),
 					Culture.valueOf(provinceResult.split(";")[3]), provinceResult.split(";")[1], dinastia,
 					names.get(Culture.valueOf(provinceResult.split(";")[3]).ordinal()));
 			TitleUtility.assignTitle(provinceResult.split(";")[0] + ".txt", new File(dst_mod + "\\history\\titles"),
-					3000000 + k);
+					1000 + k);
 			// Repubbliche marinare
 			if (holding.equals(Holding.city)
 					&& ProvinceUtility.isCoastalProvince(Integer.parseInt(provinceResult.split(";")[2]))) {
 				String titleName = provinceResult.split(";")[0].substring(2);
 				TitleUtility.assignTitle("d_" + titleName + "_rep.txt", new File(dst_mod + "\\history\\titles"),
-						3000000 + k);
+						1000 + k);
 
 				TitleUtility.assignDuchyToRepublic(src_landed, dst_republics, titleName, dst_republic_names);
 				// Copia la Flag
