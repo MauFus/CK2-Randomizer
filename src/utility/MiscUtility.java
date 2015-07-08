@@ -154,8 +154,8 @@ public class MiscUtility {
 							if (!line.startsWith("#")) {
 								String splitted[] = line.split(" ");
 								for (String string : splitted) {
-									// Skip empty strings
-									if (string.trim().length() > 1) {
+									// Skip empty strings or composed names
+									if (string.trim().length() > 1 && !string.contains("\"")) {
 										// Register only culture specific name
 										names.get(j).add(string.split("_")[0].trim());
 										Statistics.countNames();
